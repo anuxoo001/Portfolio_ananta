@@ -1,0 +1,23 @@
+<svg width="800" height="500" viewBox="0 0 800 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="safeBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#00ffd8" />
+      <stop offset="100%" stop-color="#5c2dff" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" rx="48" fill="url(#safeBg)" />
+  <g opacity="0.18">
+    <circle cx="150" cy="100" r="50" fill="#fff" />
+    <circle cx="590" cy="130" r="60" fill="#fff" />
+    <circle cx="360" cy="320" r="90" fill="#fff" />
+  </g>
+  <rect x="110" y="130" width="330" height="220" rx="32" fill="#040c18" opacity="0.95" />
+  <path d="M200 210 H330" stroke="#5fffb0" stroke-width="12" stroke-linecap="round" />
+  <path d="M200 260 H380" stroke="#5fffb0" stroke-width="12" stroke-linecap="round" />
+  <path d="M200 310 H310" stroke="#5fffb0" stroke-width="12" stroke-linecap="round" />
+  <circle cx="560" cy="330" r="64" fill="#7f00ff" opacity="0.92" />
+  <path d="M560 270 L585 315 L530 320" stroke="#fff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M520 250 C540 200 600 200 620 250 L620 320 C600 370 540 370 520 320 Z" fill="#00ffd8" opacity="0.75" />
+  <text x="120" y="85" fill="#fff" font-size="46" font-family="Inter, sans-serif" font-weight="700">TourSafe</text>
+  <text x="120" y="125" fill="#c8fff9" font-size="18" font-family="Inter, sans-serif">Tourist Safety App</text>
+</svg>

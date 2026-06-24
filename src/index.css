@@ -11,3 +11,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* Ensure dark-only cyberpunk theme */
+:root { color-scheme: dark; }
+
