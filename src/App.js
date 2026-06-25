@@ -527,13 +527,18 @@ export default function App() {
               <div className="glass border border-white/10 rounded-2xl p-5">
                 <h3 className="text-base font-semibold">Quick Form (UI)</h3>
                 <p className="text-sm text-neutral-400 mt-2">Share your message, request a callback, or start a new project conversation.</p>
-                <div className="mt-4 grid gap-3">
-                  <input className="w-full rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-sm outline-none focus:border-neon-cyan" placeholder="Full name" />
-                  <input className="w-full rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-sm outline-none focus:border-neon-cyan" placeholder="Email address" />
-                  <textarea className="w-full rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-sm outline-none focus:border-neon-cyan min-h-[110px]" placeholder="Your Message" />
-                  <button className="rounded-xl bg-gradient-to-r from-neon-cyan/70 via-neon-magenta/70 to-neon-cyan/70 px-4 py-2 text-sm font-semibold shadow-neon">
-                    Send Message
-                  </button>
+                <div className="mt-4">
+                  {/* Simple horizontal CTA button to open the Google Form */}
+                  <div className="w-full">
+                    <a
+                      href="https://docs.google.com/forms/d/e/1FAIpQLSf-5o32h6XXqDxlZBuqbP0RiGFegHI9ZZZXeeUp_o4DqgY4Zg/viewform"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="w-full inline-flex items-center justify-center gap-3 px-5 py-3 rounded-xl bg-gradient-to-r from-neon-cyan/70 via-neon-magenta/70 to-neon-cyan/70 text-sm font-semibold shadow-neon"
+                    >
+                      Open Quick Form
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
