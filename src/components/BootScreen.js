@@ -15,7 +15,7 @@ export default function BootScreen({ onDone }) {
       'BOOTING SYSTEM...',
       'INITIALIZING CORE INTERFACE [OK]',
       'LOADING MODULES',
-      'LINKING: MATRIX-RAIN / PARTICLE-CORE [OK]'
+      '' // intentionally blank instead of linking text
     ];
 
     // Type lines one by one
