@@ -104,7 +104,16 @@ const PROFILE = {
         'Tourist safety app with route alerts, safe-zone mapping, and travel guidance powered by Node, Express, and MongoDB.',
       tags: ['Safety', 'Mapping', 'Alerts', 'React'],
       image: '/toursafe.svg',
-      liveUrl: '',
+      liveUrl: 'https://toursafe-s.vercel.app/',
+    },
+    {
+      title: 'Smart Campus Management System',
+      category: 'Campus Management App',
+      description:
+        'Full-stack campus platform with student, teacher, and admin dashboards, quizzes, exams, attendance, marks, assignments, events, notices, forums, and placement tracking.',
+      tags: ['React', 'Redux', 'Node.js', 'Express', 'MongoDB'],
+      image: '/campus.svg',
+      liveUrl: 'https://smart-campus-management-system-nu.vercel.app',
     },
   ],
   strengths: ['Quick learner', 'Teamwork & collaboration', 'Ability to work under pressure'],

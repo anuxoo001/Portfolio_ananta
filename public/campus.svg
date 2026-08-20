@@ -1,0 +1,31 @@
+<svg width="800" height="500" viewBox="0 0 800 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="campusBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#00f5ff" />
+      <stop offset="100%" stop-color="#a13eff" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" rx="48" fill="url(#campusBg)" />
+  <g opacity="0.18">
+    <circle cx="150" cy="110" r="70" fill="white" />
+    <circle cx="620" cy="120" r="80" fill="white" />
+    <circle cx="380" cy="360" r="90" fill="white" />
+  </g>
+  <rect x="110" y="120" width="360" height="250" rx="28" fill="#040c18" opacity="0.96" />
+  <rect x="132" y="146" width="150" height="22" rx="11" fill="#1c48ff" />
+  <rect x="132" y="182" width="316" height="70" rx="14" fill="#0b1a33" />
+  <rect x="150" y="198" width="90" height="12" rx="6" fill="#5fd3ff" />
+  <rect x="150" y="220" width="200" height="12" rx="6" fill="#2f4f8f" />
+  <rect x="132" y="268" width="316" height="70" rx="14" fill="#0b1a33" />
+  <rect x="150" y="284" width="70" height="12" rx="6" fill="#00f5ff" />
+  <rect x="150" y="306" width="170" height="12" rx="6" fill="#2f4f8f" />
+  <rect x="132" y="354" width="316" height="4" rx="2" fill="#1c48ff" opacity="0.6" />
+  <circle cx="560" cy="200" r="88" fill="#040d22" opacity="0.92" />
+  <path d="M560 136 C612 136 648 172 648 224 C648 276 612 312 560 312 C508 312 472 276 472 224 C472 172 508 136 560 136 Z" fill="#00f5ff" opacity="0.28" />
+  <path d="M560 174 L592 202 L560 230 L528 202 Z" fill="#7f5cff" />
+  <path d="M560 174 L592 202 L560 230 L528 202 Z" stroke="#fff" stroke-width="3" stroke-linejoin="round" />
+  <path d="M533 292 C544 268 576 268 587 292" stroke="#00f5ff" stroke-width="10" stroke-linecap="round" />
+  <circle cx="560" cy="202" r="5" fill="#fff" />
+  <text x="110" y="78" fill="#fff" font-size="44" font-family="Inter, sans-serif" font-weight="700">Smart Campus</text>
+  <text x="110" y="118" fill="#baf6ff" font-size="18" font-family="Inter, sans-serif">Campus Management System</text>
+</svg>
