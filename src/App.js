@@ -1,14 +1,20 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import BootScreen from './components/BootScreen';
 import MouseGlow from './components/MouseGlow';
 import Terminal from './components/Terminal';
+import TypingText from './components/TypingText';
 import R3FScene from './components/R3FScene';
 import CyberSection from './components/CyberSection';
-import ProjectCard from './components/ProjectCard';
+import ProjectsShowcase from './components/ProjectsShowcase';
+import ContactSection from './components/ContactSection';
+import { ScrollProgress, BackToTop, FloatingGitHub } from './components/SiteChrome';
 import Navbar from './components/Navbar';
 import SectionWrap from './components/SectionWrap';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const PROFILE = {
   name: 'Ananta Kumar Parida',
@@ -31,7 +37,7 @@ const PROFILE = {
       title: 'Matriculation (CBSE)',
       org: 'The Mother Public School, Banamalipur',
       year: '2021',
-      detail: 'Balipatna & Banamalipur (as per records)',
+      detail: 'Balipatna & Banamalipur',
     },
     {
       title: 'Intermediate (CHSE)',
@@ -41,6 +47,17 @@ const PROFILE = {
     },
   ],
   experience: [
+    {
+      role: 'Full Stack Intern',
+      org: 'Envistream Smartech Pvt. Ltd.',
+      duration: '2026 – Present',
+      current: true,
+      bullets: [
+        'Building and maintaining full-stack web applications with React.js, Node.js, Express.js, and MongoDB.',
+        'Developing REST APIs and integrating frontend interfaces with backend services.',
+        'Collaborating with the team on feature development, debugging, and deployment.',
+      ],
+    },
     {
       role: 'Core Java Intern',
       org: 'CTTC, Bhubaneswar',
@@ -93,18 +110,42 @@ const PROFILE = {
       category: 'MERN Chat App',
       description:
         'Chat-focused MERN app with real-time messaging, secure auth, and a responsive interface for quick conversations.',
-      tags: ['Chat', 'Realtime', 'Auth', 'React'],
+      tags: ['Chat', 'Realtime', 'Auth', 'React', 'Socket.io', 'MongoDB'],
       image: '/clixter.svg',
+      gallery: ['/clixter.svg', '/clixter-2.svg', '/clixter-3.svg'],
       liveUrl: 'https://clixter.vercel.app/',
+      githubUrl: 'https://github.com/anuxoo001',
+      year: '2024',
+      featured: false,
+      accent: 'from-neon-cyan/30 via-transparent to-neon-magenta/20',
+      features: [
+        'Realtime 1-1 messaging with Socket.io',
+        'Secure JWT auth + protected routes',
+        'Online presence + typing indicators',
+        'Group chats + responsive mobile UI',
+        'Optimized MongoDB message schema',
+      ],
     },
     {
       title: 'TourSafe',
       category: 'Tourist Safety App',
       description:
         'Tourist safety app with route alerts, safe-zone mapping, and travel guidance powered by Node, Express, and MongoDB.',
-      tags: ['Safety', 'Mapping', 'Alerts', 'React'],
+      tags: ['Safety', 'Mapping', 'Alerts', 'React', 'Node.js'],
       image: '/toursafe.svg',
+      gallery: ['/toursafe.svg', '/toursafe-2.svg', '/toursafe-3.svg'],
       liveUrl: 'https://toursafe-s.vercel.app/',
+      githubUrl: 'https://github.com/anuxoo001',
+      year: '2024',
+      featured: false,
+      accent: 'from-emerald-400/25 via-transparent to-neon-cyan/20',
+      features: [
+        'Route alerts + safe-zone mapping',
+        'SOS + live location sharing',
+        'Travel guidance + safety feed',
+        'Node / Express / MongoDB backend',
+        'Mobile-first responsive UI',
+      ],
     },
     {
       title: 'Smart Campus Management System',
@@ -113,7 +154,41 @@ const PROFILE = {
         'Full-stack campus platform with student, teacher, and admin dashboards, quizzes, exams, attendance, marks, assignments, events, notices, forums, and placement tracking.',
       tags: ['React', 'Redux', 'Node.js', 'Express', 'MongoDB'],
       image: '/campus.svg',
+      gallery: ['/campus.svg', '/campus-2.svg', '/campus-3.svg'],
       liveUrl: 'https://smart-campus-management-system-nu.vercel.app',
+      githubUrl: 'https://github.com/anuxoo001',
+      year: '2025',
+      featured: false,
+      accent: 'from-violet-500/25 via-transparent to-neon-cyan/20',
+      features: [
+        'Student / Teacher / Admin dashboards',
+        'Quizzes, exams, attendance, marks',
+        'Assignments, events, notices, forums',
+        'Placement tracking + reports',
+        'Redux + REST APIs + role auth',
+      ],
+    },
+    {
+      title: 'GymPro - Gym Management System',
+      category: 'Gym Management System',
+      description:
+        'Premium gym website for Bhubaneswar with membership plans, BMI calculator, trainer profiles, class schedule, programs gallery, and free-trial booking with contact integration.',
+      tags: ['Fitness', 'Membership', 'BMI Calculator', 'Trainers', 'Booking'],
+      image: '/gym.svg',
+      gallery: ['/gym.svg', '/gym-2.svg', '/gym-3.svg'],
+      liveUrl: 'https://gym-management01-theta.vercel.app/',
+      githubUrl: 'https://github.com/anuxoo001',
+      year: '2025',
+      featured: false,
+      accent: 'from-neon-magenta/30 via-transparent to-neon-cyan/25',
+      features: [
+        'Membership plans ₹999 – ₹3499 with yearly save',
+        'Instant BMI calculator + diet counselling',
+        'Trainer profiles + daily class timetable',
+        'Programs gallery + virtual tour + facilities',
+        'Free-trial booking + WhatsApp / call integration',
+        'Testimonials, FAQ, contact + maps',
+      ],
     },
   ],
   strengths: ['Quick learner', 'Teamwork & collaboration', 'Ability to work under pressure'],
@@ -131,62 +206,117 @@ const PROFILE = {
 };
 
 function SkillBars() {
+  const [q, setQ] = useState('');
+  const barsRef = useRef(null);
+  const list = useMemo(() => {
+    const t = q.trim().toLowerCase();
+    if (!t) return PROFILE.skills;
+    return PROFILE.skills.filter((s) => s.label.toLowerCase().includes(t));
+  }, [q]);
+  const avg = Math.round(PROFILE.skills.reduce((a, s) => a + s.value, 0) / PROFILE.skills.length);
+  const top = [...PROFILE.skills].sort((a, b) => b.value - a.value)[0];
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.utils.toArray('.skill-fill').forEach((el) => {
+        const w = el.dataset.w || '0%';
+        gsap.fromTo(el, { width: '0%' }, {
+          width: w, duration: 1.2, ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 92%' },
+        });
+      });
+    }, barsRef);
+    return () => ctx.revert();
+  }, [list.length]);
+
   return (
-    <div className="mt-6 grid gap-3">
-      {PROFILE.skills.map((s) => (
-        <div key={s.label} className="glass border border-white/10 rounded-2xl p-3">
-          <div className="flex items-center justify-between text-xs text-neutral-300 mb-2">
-            <span className="font-mono">{s.label}</span>
-            <span className="text-neon-magenta">{s.value}%</span>
-          </div>
-          <div className="h-2 w-full rounded-full bg-white/10 overflow-hidden">
-            <div
-              className="h-full rounded-full bg-gradient-to-r from-neon-cyan/80 via-neon-magenta/70 to-neon-cyan/80"
-              style={{ width: `${s.value}%` }}
-            />
-          </div>
+    <div ref={barsRef} className="mt-6">
+      <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-4">
+        <div className="flex gap-2">
+          <span className="rounded-full bg-neon-cyan/10 border border-neon-cyan/25 px-3 py-1.5 text-[11px] font-mono text-neon-cyan">AVG {avg}%</span>
+          <span className="rounded-full bg-neon-magenta/10 border border-neon-magenta/25 px-3 py-1.5 text-[11px] font-mono text-neon-magenta">TOP: {top.label} {top.value}%</span>
         </div>
-      ))}
+        <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Filter skills… (e.g. react, java)"
+          className="sm:ml-auto w-full sm:w-64 rounded-xl bg-black/40 border border-white/10 px-3 py-2 text-xs outline-none focus:border-neon-cyan/50 placeholder:text-neutral-600" />
+      </div>
+      <div className="grid gap-3">
+        {list.map((s) => (
+          <div key={s.label} className="reveal glass border border-white/10 rounded-2xl p-3 hover:border-neon-cyan/30 transition group">
+            <div className="flex items-center justify-between text-xs text-neutral-300 mb-2">
+              <span className="font-mono group-hover:text-white transition">{s.label}</span>
+              <span className="text-neon-magenta font-mono">{s.value}%</span>
+            </div>
+            <div className="h-2 w-full rounded-full bg-white/10 overflow-hidden">
+              <div data-w={`${s.value}%`}
+                className="skill-fill h-full rounded-full bg-gradient-to-r from-neon-cyan/80 via-neon-magenta/70 to-neon-cyan/80"
+                style={{ width: `${s.value}%` }}
+              />
+            </div>
+          </div>
+        ))}
+        {!list.length && <div className="text-sm text-neutral-500">No skills match “{q}”. <button className="text-neon-cyan underline" onClick={() => setQ('')}>Clear</button></div>}
+      </div>
     </div>
   );
 }
 
 function Timeline() {
+  const [open, setOpen] = useState(0);
   return (
-    <div className="grid gap-3">
-      {PROFILE.experience.map((e) => (
-        <div key={e.role} className="glass border border-white/10 rounded-2xl p-4">
-          <div className="flex items-start justify-between gap-3">
-            <div>
-              <h3 className="text-base font-semibold">{e.role}</h3>
-              <p className="text-sm text-neutral-400">{e.org}</p>
+    <div className="relative mt-2 pl-6">
+      <div className="absolute left-[7px] top-2 bottom-2 w-[2px] bg-gradient-to-b from-neon-cyan/60 via-white/10 to-neon-magenta/60" />
+      <div className="grid gap-3">
+        {PROFILE.experience.map((e, i) => {
+          const isOpen = open === i;
+          return (
+            <div key={e.role} className="reveal relative glass border border-white/10 rounded-2xl p-4 hover:border-neon-cyan/25 transition">
+              <span className={`absolute -left-6 top-5 h-4 w-4 rounded-full border-2 ${isOpen ? 'bg-neon-cyan border-neon-cyan shadow-[0_0_16px_rgba(0,255,255,0.8)]' : 'bg-black border-white/20'}`} />
+              <button onClick={() => setOpen(isOpen ? -1 : i)} className="w-full text-left">
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <h3 className="text-base font-semibold">
+                      {i + 1}. {e.role}{' '}
+                      {e.current && (
+                        <span className="ml-1 inline-flex items-center gap-1 rounded-full bg-emerald-400/10 border border-emerald-400/30 px-2 py-0.5 align-middle text-[10px] font-mono font-normal text-emerald-300">
+                          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />Current
+                        </span>
+                      )}
+                    </h3>
+                    <p className="text-sm text-neutral-400">{e.org}</p>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-xs text-neon-cyan font-mono whitespace-nowrap">{e.duration}</div>
+                    <div className="text-[11px] text-neutral-500 mt-1">{isOpen ? '− collapse' : '+ expand'}</div>
+                  </div>
+                </div>
+              </button>
+              {isOpen && (
+                <motion.ul initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }}
+                  className="mt-3 list-disc list-inside text-sm text-neutral-300 space-y-1 overflow-hidden">
+                  {e.bullets.map((b) => (<li key={b}>{b}</li>))}
+                </motion.ul>
+              )}
             </div>
-            <div className="text-xs text-neon-cyan font-mono whitespace-nowrap">{e.duration}</div>
-          </div>
-          <ul className="mt-3 list-disc list-inside text-sm text-neutral-300 space-y-1">
-            {e.bullets.map((b) => (
-              <li key={b}>{b}</li>
-            ))}
-          </ul>
-        </div>
-      ))}
+          );
+        })}
+      </div>
     </div>
   );
 }
 
 function EducationList() {
+  const icons = ['🎓', '📘', '🏫'];
   return (
-    <div className="grid gap-3">
-      {PROFILE.education.map((ed) => (
-        <div key={ed.title} className="glass border border-white/10 rounded-2xl p-4">
-          <div className="flex items-start justify-between gap-3">
-            <div>
-              <h3 className="text-base font-semibold">{ed.title}</h3>
-              <p className="text-sm text-neutral-400">{ed.org}</p>
-            </div>
-            <div className="text-xs text-neon-magenta font-mono whitespace-nowrap">{ed.year}</div>
+    <div className="grid gap-3 md:grid-cols-3">
+      {PROFILE.education.map((ed, i) => (
+        <div key={ed.title} className="reveal glass border border-white/10 rounded-2xl p-4 hover:-translate-y-1 hover:border-neon-magenta/30 transition duration-300">
+          <div className="flex items-center justify-between">
+            <span className="text-2xl">{icons[i % icons.length]}</span>
+            <span className="text-[11px] font-mono rounded-full bg-neon-magenta/10 border border-neon-magenta/25 text-neon-magenta px-2.5 py-1">{ed.year}</span>
           </div>
-          <p className="mt-2 text-sm text-neutral-300">{ed.detail}</p>
+          <h3 className="mt-3 text-base font-semibold leading-snug">{ed.title}</h3>
+          <p className="text-sm text-neutral-400 mt-1">{ed.org}</p>
+          <p className="mt-2 text-[13px] text-neutral-300">{ed.detail}</p>
         </div>
       ))}
     </div>
@@ -194,15 +324,44 @@ function EducationList() {
 }
 
 function AchievementsGrid() {
-
+  const [idx, setIdx] = useState(0);
+  const [copied, setCopied] = useState(false);
+  const total = PROFILE.achievements.length;
+  const medals = ['🥇', '🚀', '💻'];
+  const copy = async () => {
+    try { await navigator.clipboard.writeText(PROFILE.achievements[idx]); setCopied(true); setTimeout(() => setCopied(false), 1500); } catch {}
+  };
   return (
-    <div className="mt-6 grid gap-3 md:grid-cols-2">
-      {PROFILE.achievements.map((a) => (
-        <div key={a} className="glass border border-white/10 rounded-2xl p-4">
-          <div className="text-xs text-neutral-400 mb-2">ACHIEVEMENT</div>
-          <div className="text-sm text-neutral-200 leading-relaxed">{a}</div>
+    <div className="mt-6">
+      <div className="reveal relative glass border border-white/10 rounded-2xl p-5 overflow-hidden">
+        <div className="absolute -top-16 -right-16 h-48 w-48 rounded-full bg-neon-magenta/15 blur-3xl pointer-events-none" />
+        <div className="text-xs text-neutral-400 font-mono">HIGHLIGHT {idx + 1}/{total}</div>
+        <div className="mt-2 flex items-start gap-3">
+          <span className="text-3xl">{medals[idx % medals.length]}</span>
+          <p className="text-sm md:text-base text-neutral-100 leading-relaxed min-h-[56px]">{PROFILE.achievements[idx]}</p>
         </div>
-      ))}
+        <div className="mt-4 flex items-center gap-2">
+          <button onClick={() => setIdx((idx - 1 + total) % total)} className="h-9 w-9 rounded-full border border-white/10 hover:border-neon-cyan/40 hover:text-neon-cyan transition">‹</button>
+          <div className="flex gap-1.5">
+            {PROFILE.achievements.map((_, i) => (
+              <button key={i} aria-label={`Go to ${i + 1}`} onClick={() => setIdx(i)}
+                className={`h-1.5 rounded-full transition-all ${i === idx ? 'w-6 bg-neon-cyan' : 'w-1.5 bg-white/25'}`} />
+            ))}
+          </div>
+          <button onClick={() => setIdx((idx + 1) % total)} className="h-9 w-9 rounded-full border border-white/10 hover:border-neon-cyan/40 hover:text-neon-cyan transition">›</button>
+          <button onClick={copy} className="ml-auto rounded-full border border-white/10 px-3 py-1.5 text-[11px] text-neutral-300 hover:text-white transition">
+            {copied ? '✓ Copied!' : '⧉ Copy'}
+          </button>
+        </div>
+      </div>
+      <div className="mt-3 grid gap-3 md:grid-cols-3">
+        {PROFILE.achievements.map((a, i) => (
+          <button key={a} onClick={() => setIdx(i)}
+            className={`reveal text-left rounded-2xl border p-3 text-[12px] leading-relaxed transition ${i === idx ? 'border-neon-cyan/40 bg-neon-cyan/5 text-white' : 'border-white/10 bg-black/20 text-neutral-400 hover:text-neutral-200'}`}>
+            <span className="mr-1.5">{medals[i % medals.length]}</span>{a.slice(0, 90)}{a.length > 90 ? '…' : ''}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
@@ -223,21 +382,27 @@ export default function App() {
 
   useEffect(() => {
     const blobs = blobContainer.current?.querySelectorAll('.animated-blob');
-    if (!blobs) return;
-
-    gsap.to(blobs, {
-      y: '+=30',
-      x: '+=20',
-      repeat: -1,
-      yoyo: true,
-      ease: 'sine.inOut',
-      duration: 6,
-      stagger: {
-        each: 0.4,
+    if (blobs?.length) {
+      gsap.to(blobs, {
+        y: '+=30',
+        x: '+=20',
         repeat: -1,
         yoyo: true,
-      },
+        ease: 'sine.inOut',
+        duration: 6,
+        stagger: { each: 0.4, repeat: -1, yoyo: true },
+      });
+    }
+    // Global section reveals
+    const ctx = gsap.context(() => {
+      gsap.utils.toArray('.reveal').forEach((el) => {
+        gsap.fromTo(el, { opacity: 0, y: 26 }, {
+          opacity: 1, y: 0, duration: 0.7, ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 88%' },
+        });
+      });
     });
+    return () => ctx.revert();
   }, []);
 
   return (
@@ -281,6 +446,9 @@ export default function App() {
 
       <BootScreen onDone={() => {}} />
       <MouseGlow />
+      <ScrollProgress />
+      <BackToTop />
+      <FloatingGitHub url={PROFILE.github} />
 
       <div className="fixed inset-0 overflow-hidden z-0 bg-grid">
         <div className="grid-overlay" />
@@ -303,7 +471,7 @@ export default function App() {
             transition={{ duration: 0.7, ease: 'easeOut' }}
             className="max-w-6xl mx-auto"
           >
-<div className="flex items-center gap-3">
+<div className="flex items-center gap-3 flex-wrap">
                 <div className="h-16 w-16 rounded-full border border-neon-cyan/30 overflow-hidden bg-black/20 shadow-[0_0_30px_rgba(0,255,255,0.1)]">
                   <img
                     src={PROFILE.image}
@@ -314,16 +482,23 @@ export default function App() {
                     }}
                   />
                 </div>
-                <div>
+                <div className="flex-1 min-w-[200px]">
                   <h1 className="text-lg font-semibold">{PROFILE.name}</h1>
                   <p className="text-sm text-neutral-400">{PROFILE.title}</p>
                 </div>
+                <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1.5 text-[11px] font-mono text-emerald-300">
+                  <span className="relative flex h-2 w-2"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" /><span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" /></span>
+                  Full Stack Intern @ Envistream Smartech
+                </span>
               </div>
 
             <div className="mt-8 grid gap-5 md:grid-cols-2 md:items-center">
               <div className="space-y-3">
                 <div className="text-3xl md:text-4xl font-bold leading-tight">
                   MERN Stack Developer
+                </div>
+                <div className="text-sm md:text-base font-mono text-neon-cyan min-h-[28px]">
+                  <TypingText lines={['React • Node • Express • MongoDB', 'Realtime Chat Apps', 'Campus Platforms', 'Gym Management Systems', 'Java DSA • 100+ LeetCode']} />
                 </div>
 
                 <p className="text-sm text-neutral-300 leading-relaxed max-w-xl">
@@ -335,9 +510,9 @@ export default function App() {
                     href={PROFILE.github}
                     target="_blank"
                     rel="noreferrer"
-                    className="px-4 py-2 rounded-2xl border border-white/10 bg-black/30 hover:bg-black/50 transition text-xs"
+                    className="px-4 py-2 rounded-2xl border border-white/10 bg-black/30 hover:bg-black/50 hover:border-neon-cyan/40 transition text-xs"
                   >
-                    GitHub
+                    ⌁ GitHub
                   </a>
                   <a
                     href={PROFILE.linkedin}
@@ -345,8 +520,28 @@ export default function App() {
                     rel="noreferrer"
                     className="px-4 py-2 rounded-2xl border border-neon-magenta/30 bg-black/30 hover:bg-black/50 transition text-xs text-neon-magenta"
                   >
-                    LinkedIn
+                    ⇪ LinkedIn
                   </a>
+                  <a href="#projects" className="px-4 py-2 rounded-2xl bg-neon-cyan text-black text-xs font-bold hover:shadow-[0_0_20px_rgba(0,255,255,0.5)] transition">
+                    View Projects ↓
+                  </a>
+                  <a href="#contact" className="px-4 py-2 rounded-2xl border border-neon-cyan/30 text-neon-cyan text-xs hover:bg-neon-cyan/10 transition">
+                    Hire Me →
+                  </a>
+                </div>
+
+                <div className="mt-4 grid grid-cols-4 gap-2 max-w-xl">
+                  {[
+                    { n: PROFILE.projects.length, l: 'Projects' },
+                    { n: '100+', l: 'DSA solved' },
+                    { n: PROFILE.experience.length, l: 'Internships' },
+                    { n: PROFILE.projects.reduce((a, p) => a + (p.gallery?.length || 1), 0), l: 'Photos' },
+                  ].map((s) => (
+                    <div key={s.l} className="rounded-2xl border border-white/10 bg-black/25 p-2.5 text-center">
+                      <div className="text-lg font-bold font-mono text-white">{s.n}</div>
+                      <div className="text-[10px] uppercase tracking-wider text-neutral-500">{s.l}</div>
+                    </div>
+                  ))}
                 </div>
 
                 <div className="mt-5">
@@ -396,9 +591,14 @@ export default function App() {
           
           {/* Sections */}
           <SectionWrap id="about" className="scroll-mt-24" />
-          <CyberSection title="About" subtitle="Career Objective + Core Profile">
+          <CyberSection title="About" subtitle="Career Objective + Core Profile • quick facts">
+            <div className="flex flex-wrap gap-2 mt-1 mb-4">
+              {['📍 Bhubaneswar, Odisha', '🗣 English • Hindi • Odia', '💼 Full Stack Intern @ Envistream Smartech', '⚡ MERN + Java DSA'].map((c) => (
+                <span key={c} className="rounded-full border border-white/10 bg-black/25 px-3 py-1.5 text-[11px] text-neutral-300">{c}</span>
+              ))}
+            </div>
             <div className="grid gap-5 md:grid-cols-2">
-              <div className="glass border border-white/10 rounded-2xl p-5">
+              <div className="reveal glass border border-white/10 rounded-2xl p-5">
                 <h3 className="text-base font-semibold">Career Objective</h3>
                 <p className="mt-3 text-sm text-neutral-300 leading-relaxed">{PROFILE.objective}</p>
 
@@ -418,8 +618,8 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="glass border border-white/10 rounded-2xl p-5">
-                <h3 className="text-base font-semibold">Strengths</h3>
+              <div className="reveal glass border border-white/10 rounded-2xl p-5">
+                <h3 className="text-base font-semibold">💪 Strengths</h3>
                 <ul className="mt-3 list-disc list-inside text-sm text-neutral-300 space-y-2">
                   {PROFILE.strengths.map((s) => (
                     <li key={s}>{s}</li>
@@ -437,12 +637,12 @@ export default function App() {
           </CyberSection>
 
           <SectionWrap id="skills" className="scroll-mt-24" />
-          <CyberSection title="Skills" subtitle="Approx. proficiency">
+          <CyberSection title="Skills" subtitle="Animated bars • filter to explore • avg + top highlighted">
             <SkillBars />
           </CyberSection>
 
           <SectionWrap id="experience" className="scroll-mt-24" />
-          <CyberSection title="Experience" subtitle="Internships & Projects Impact">
+          <CyberSection title="Experience" subtitle="Timeline • click a card to expand">
             <Timeline />
           </CyberSection>
 
@@ -452,20 +652,8 @@ export default function App() {
           </CyberSection>
 
           <SectionWrap id="projects" className="scroll-mt-24" />
-          <CyberSection title="Projects" subtitle="Selected MERN Stack work">
-            <div className="mt-6 grid gap-4 md:grid-cols-2">
-              {PROFILE.projects.map((p) => (
-                <ProjectCard
-                  key={p.title}
-                  title={p.title}
-                  category={p.category}
-                  description={p.description}
-                  image={p.image}
-                  tags={p.tags}
-                  liveUrl={p.liveUrl}
-                />
-              ))}
-            </div>
+          <CyberSection title="Projects" subtitle="In order • GymPro last • search, filter & open case studies">
+            <ProjectsShowcase projects={PROFILE.projects} />
           </CyberSection>
 
           <SectionWrap id="achievements" className="scroll-mt-24" />
@@ -474,7 +662,7 @@ export default function App() {
           </CyberSection>
 
           <SectionWrap id="terminal" className="scroll-mt-24" />
-          <CyberSection title="Terminal" subtitle="Signals & Identity">
+          <CyberSection title="Terminal" subtitle="Interactive — type help, projects, gym, contact">
             <div className="mt-6 grid gap-4 md:grid-cols-2">
               <div className="glass border border-white/10 rounded-2xl p-4">
                 <h3 className="text-base font-semibold">SIPs Undertaken</h3>
@@ -507,54 +695,23 @@ export default function App() {
           </CyberSection>
 
           <SectionWrap id="contact" className="scroll-mt-24" />
-          <CyberSection title="Contact" subtitle="Send a signal">
-            <div className="mt-6 grid gap-4 md:grid-cols-2">
-              <div className="glass border border-white/10 rounded-2xl p-5">
-                <h3 className="text-base font-semibold">Direct</h3>
-                <div className="mt-4 text-sm text-neutral-300 space-y-3">
-                  <div>
-                    <div className="text-neutral-500">Email</div>
-                    {PROFILE.emails.map((email) => (
-                      <a key={email} className="text-neon-cyan font-mono block" href={`mailto:${email}`}>
-                        {email}
-                      </a>
-                    ))}
-                  </div>
-                  <div>
-                    <div className="text-neutral-500">Phone</div>
-                    <a className="text-neon-magenta font-mono" href={`tel:${PROFILE.phone.replaceAll(' ', '')}`}>
-                      {PROFILE.phone}
-                    </a>
-                  </div>
-                  <div>
-                    <div className="text-neutral-500">Location</div>
-                    <div>{PROFILE.address}</div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="glass border border-white/10 rounded-2xl p-5">
-                <h3 className="text-base font-semibold">Quick Form (UI)</h3>
-                <p className="text-sm text-neutral-400 mt-2">Share your message, request a callback, or start a new project conversation.</p>
-                <div className="mt-4">
-                  {/* Simple horizontal CTA button to open the Google Form */}
-                  <div className="w-full">
-                    <a
-                      href="https://docs.google.com/forms/d/e/1FAIpQLSf-5o32h6XXqDxlZBuqbP0RiGFegHI9ZZZXeeUp_o4DqgY4Zg/viewform"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="w-full inline-flex items-center justify-center gap-3 px-5 py-3 rounded-xl bg-gradient-to-r from-neon-cyan/70 via-neon-magenta/70 to-neon-cyan/70 text-sm font-semibold shadow-neon"
-                    >
-                      Open Quick Form
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <CyberSection title="Contact" subtitle="Send a signal • validated form + one-tap copy">
+            <ContactSection profile={PROFILE} />
           </CyberSection>
 
-          <footer className="mt-10 text-xs text-neutral-500">
-            Declaration: I hereby declare that the information above is true to my knowledge and I shall be liable for any misinformation.
+          <footer className="mt-10 rounded-2xl border border-white/10 bg-black/25 p-5">
+            <div className="flex flex-col md:flex-row md:items-center gap-3 text-xs text-neutral-500">
+              <div className="flex-1">
+                <div className="text-neutral-300 font-semibold">Ananta Kumar Parida • MERN Stack Developer</div>
+                <div className="mt-1">© {new Date().getFullYear()} • Bhubaneswar, Odisha • {PROFILE.projects.length} projects (GymPro last) • Built with React + GSAP</div>
+                <div className="mt-2 italic">Declaration: I hereby declare that the information above is true to my knowledge and I shall be liable for any misinformation.</div>
+              </div>
+              <div className="flex gap-2">
+                <a href="#hero" className="rounded-full border border-white/10 px-3 py-1.5 hover:text-white transition">↑ Top</a>
+                <a href={PROFILE.github} target="_blank" rel="noreferrer" className="rounded-full border border-white/10 px-3 py-1.5 hover:text-white transition">GitHub</a>
+                <a href={PROFILE.linkedin} target="_blank" rel="noreferrer" className="rounded-full border border-white/10 px-3 py-1.5 hover:text-white transition">LinkedIn</a>
+              </div>
+            </div>
           </footer>
         </div>
       </main>

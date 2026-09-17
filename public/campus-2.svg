@@ -1,0 +1,15 @@
+<svg width="800" height="500" viewBox="0 0 800 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs><linearGradient id="cp2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0b1a33"/><stop offset="100%" stop-color="#00f5ff"/></linearGradient></defs>
+<rect width="800" height="500" rx="48" fill="url(#cp2)"/>
+<rect x="70" y="70" width="200" height="360" rx="24" fill="#040c18"/>
+<rect x="90" y="95" width="160" height="18" rx="9" fill="#1c48ff"/>
+<rect x="90" y="130" width="160" height="50" rx="12" fill="#0b1a33"/>
+<rect x="90" y="195" width="160" height="50" rx="12" fill="#00f5ff" opacity="0.25"/>
+<rect x="290" y="70" width="440" height="170" rx="24" fill="#fff" opacity="0.08"/>
+<rect x="290" y="260" width="215" height="170" rx="24" fill="#7f5cff" opacity="0.9"/>
+<rect x="515" y="260" width="215" height="170" rx="24" fill="#040c18"/>
+<text x="310" y="140" fill="#fff" font-size="28" font-family="Inter,sans-serif" font-weight="700">Dashboards</text>
+<text x="310" y="175" fill="#baf6ff" font-size="18" font-family="Inter,sans-serif">Student • Teacher • Admin</text>
+<text x="310" y="330" fill="#fff" font-size="22" font-family="Inter,sans-serif" font-weight="700">Quizzes</text>
+<text x="535" y="330" fill="#00f5ff" font-size="22" font-family="Inter,sans-serif" font-weight="700">Attendance</text>
+</svg>

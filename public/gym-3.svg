@@ -1,0 +1,16 @@
+<svg width="800" height="500" viewBox="0 0 800 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs><linearGradient id="gy3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#02141a"/><stop offset="100%" stop-color="#12d8ff"/></linearGradient></defs>
+<rect width="800" height="500" rx="48" fill="url(#gy3)"/>
+<circle cx="180" cy="200" r="70" fill="#ff2fa0" opacity="0.9"/>
+<circle cx="360" cy="200" r="70" fill="#fff" opacity="0.15"/>
+<circle cx="540" cy="200" r="70" fill="#00f5ff" opacity="0.9"/>
+<rect x="70" y="300" width="200" height="120" rx="20" fill="#040c18"/>
+<rect x="285" y="300" width="200" height="120" rx="20" fill="#040c18"/>
+<rect x="500" y="300" width="230" height="120" rx="20" fill="#ff2fa0"/>
+<text x="110" y="350" fill="#fff" font-size="20" font-family="Inter,sans-serif" font-weight="700">Trainers</text>
+<text x="325" y="350" fill="#fff" font-size="20" font-family="Inter,sans-serif" font-weight="700">Schedule</text>
+<text x="530" y="350" fill="#fff" font-size="20" font-family="Inter,sans-serif" font-weight="700">Free Trial</text>
+<text x="110" y="375" fill="#9fd8ff" font-size="16" font-family="Inter,sans-serif">NSCA certified</text>
+<text x="325" y="375" fill="#9fd8ff" font-size="16" font-family="Inter,sans-serif">Daily batches</text>
+<text x="530" y="375" fill="#fff" font-size="16" font-family="Inter,sans-serif">Book in 30s</text>
+</svg>

@@ -1,0 +1,13 @@
+<svg width="800" height="500" viewBox="0 0 800 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs><linearGradient id="cp3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#12082e"/><stop offset="100%" stop-color="#7f5cff"/></linearGradient></defs>
+<rect width="800" height="500" rx="48" fill="url(#cp3)"/>
+<rect x="70" y="90" width="360" height="120" rx="20" fill="#00f5ff" opacity="0.15"/>
+<rect x="450" y="90" width="280" height="120" rx="20" fill="#fff" opacity="0.08"/>
+<rect x="70" y="230" width="230" height="180" rx="20" fill="#040c18"/>
+<rect x="315" y="230" width="230" height="180" rx="20" fill="#040c18"/>
+<rect x="560" y="230" width="170" height="180" rx="20" fill="#00f5ff"/>
+<text x="90" y="140" fill="#fff" font-size="24" font-family="Inter,sans-serif" font-weight="700">Exams &amp; Marks</text>
+<text x="90" y="300" fill="#fff" font-size="22" font-family="Inter,sans-serif" font-weight="700">Events</text>
+<text x="335" y="300" fill="#fff" font-size="22" font-family="Inter,sans-serif" font-weight="700">Forums</text>
+<text x="580" y="300" fill="#04101f" font-size="24" font-family="Inter,sans-serif" font-weight="800">Jobs</text>
+</svg>

@@ -1,0 +1,15 @@
+<svg width="800" height="500" viewBox="0 0 800 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs><linearGradient id="gy2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1a0514"/><stop offset="100%" stop-color="#ff2fa0"/></linearGradient></defs>
+<rect width="800" height="500" rx="48" fill="url(#gy2)"/>
+<rect x="70" y="80" width="360" height="220" rx="24" fill="#040c18"/>
+<rect x="95" y="110" width="140" height="26" rx="13" fill="#ff2fa0"/>
+<rect x="95" y="150" width="310" height="16" rx="8" fill="#fff" opacity="0.7"/>
+<rect x="95" y="176" width="260" height="16" rx="8" fill="#fff" opacity="0.3"/>
+<rect x="95" y="220" width="120" height="40" rx="20" fill="#12d8ff"/>
+<rect x="450" y="80" width="280" height="220" rx="24" fill="#12d8ff" opacity="0.2"/>
+<text x="480" y="160" fill="#fff" font-size="52" font-family="Inter,sans-serif" font-weight="800">BMI</text>
+<text x="480" y="195" fill="#ffd6ec" font-size="20" font-family="Inter,sans-serif">Instant calc</text>
+<rect x="70" y="320" width="660" height="100" rx="24" fill="#fff" opacity="0.08"/>
+<text x="95" y="365" fill="#fff" font-size="24" font-family="Inter,sans-serif" font-weight="700">Starter ₹999 • Pro ₹1999 • Elite ₹3499</text>
+<text x="95" y="395" fill="#ffb8de" font-size="18" font-family="Inter,sans-serif">Membership plans • GST incl.</text>
+</svg>
