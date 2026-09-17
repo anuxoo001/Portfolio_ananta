@@ -28,7 +28,6 @@ export default function ProjectsShowcase({ projects = [] }) {
   const stats = useMemo(() => ({
     total: projects.length,
     live: projects.filter((p) => p.liveUrl).length,
-    photos: projects.reduce((a, p) => a + (p.gallery?.length || 1), 0),
     tech: allTags.length,
   }), [projects, allTags]);
 
@@ -126,11 +125,10 @@ export default function ProjectsShowcase({ projects = [] }) {
       `}</style>
 
       {/* 1+2: STATS */}
-      <div className="ps-head grid grid-cols-2 md:grid-cols-4 gap-3">
+      <div className="ps-head grid grid-cols-2 md:grid-cols-3 gap-3">
         {[
           { label: 'Projects', value: stats.total, c: 'text-neon-cyan' },
           { label: 'Live deployments', value: stats.live, c: 'text-emerald-300' },
-          { label: 'Showcase photos', value: stats.photos, c: 'text-neon-magenta' },
           { label: 'Tech tags', value: stats.tech, c: 'text-violet-300' },
         ].map((s) => (
           <div key={s.label} className="glass border border-white/10 rounded-2xl p-4 text-center">
@@ -218,7 +216,7 @@ export default function ProjectsShowcase({ projects = [] }) {
           </div>
         )}
         <div className="flex items-center justify-between text-[11px] font-mono text-neutral-500">
-          <span>Showing {filtered.length}/{projects.length} projects • {filtered.reduce((a, p) => a + (p.gallery?.length || 1), 0)} photos</span>
+          <span>Showing {filtered.length}/{projects.length} projects</span>
           {hasFilter && <button onClick={resetAll} className="text-neon-cyan hover:underline">Reset all filters</button>}
         </div>
       </div>

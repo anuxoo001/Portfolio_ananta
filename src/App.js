@@ -169,6 +169,146 @@ const PROFILE = {
       ],
     },
     {
+      title: 'ShopKart - E-Commerce Store',
+      category: 'E-Commerce App',
+      description:
+        'Full-stack online store with product catalog, cart, secure auth, and order flow built on Node, Express, and MongoDB.',
+      tags: ['E-Commerce', 'Cart', 'Auth', 'React', 'Node.js', 'MongoDB'],
+      image: '/toursafe.svg',
+      gallery: ['/toursafe.svg'],
+      githubUrl: 'https://github.com/anuxoo001',
+      year: '2024',
+      featured: false,
+      accent: 'from-emerald-400/25 via-transparent to-neon-cyan/20',
+      features: [
+        'Product catalog + search & filters',
+        'Cart + checkout order flow',
+        'Secure auth + protected routes',
+        'Node / Express / MongoDB backend',
+        'Responsive storefront UI',
+      ],
+    },
+    {
+      title: 'BookNest - Online Bookstore',
+      category: 'Bookstore App',
+      description:
+        'MERN bookstore with book catalog, search, cart, and order management for readers and admins.',
+      tags: ['Books', 'Search', 'Cart', 'React', 'Express', 'MongoDB'],
+      image: '/campus.svg',
+      gallery: ['/campus.svg'],
+      githubUrl: 'https://github.com/anuxoo001',
+      year: '2024',
+      featured: false,
+      accent: 'from-violet-500/25 via-transparent to-neon-cyan/20',
+      features: [
+        'Book catalog + instant search',
+        'Cart + order placement',
+        'Admin book management',
+        'REST APIs + MongoDB models',
+        'Clean responsive UI',
+      ],
+    },
+    {
+      title: 'TaskFlow - Task Manager',
+      category: 'Productivity App',
+      description:
+        'Task management app with auth, task CRUD, status tracking, and per-user workspaces.',
+      tags: ['Tasks', 'CRUD', 'Auth', 'React', 'Node.js', 'MongoDB'],
+      image: '/clixter.svg',
+      gallery: ['/clixter.svg'],
+      githubUrl: 'https://github.com/anuxoo001',
+      year: '2025',
+      featured: false,
+      accent: 'from-neon-cyan/30 via-transparent to-neon-magenta/20',
+      features: [
+        'Task CRUD + status workflow',
+        'User auth + private workspaces',
+        'Filter / search tasks',
+        'Express + MongoDB backend',
+        'Fast responsive UI',
+      ],
+    },
+    {
+      title: 'DevMatch - Developer Match Maker',
+      category: 'Open-Source Platform',
+      description:
+        'Platform that showcases developer skill graphs and matches them with active GitHub open-source issues by stack and level.',
+      tags: ['Open Source', 'GitHub API', 'Matching', 'React', 'Node.js'],
+      image: '/campus-2.svg',
+      gallery: ['/campus-2.svg'],
+      githubUrl: 'https://github.com/anuxoo001',
+      year: '2025',
+      featured: false,
+      accent: 'from-violet-500/25 via-transparent to-neon-magenta/20',
+      features: [
+        'Skill-graph developer profiles',
+        'Smart issue matching by stack',
+        'GitHub integration + live issues',
+        'Beginner / intermediate / advanced filters',
+        'Contribution tracking',
+      ],
+    },
+    {
+      title: 'InterviewAI - AI Interview Simulator',
+      category: 'AI Interview App',
+      description:
+        'AI-powered mock interview simulator with voice input, streaming feedback, and performance tracking.',
+      tags: ['AI', 'Voice', 'Interviews', 'React', 'Node.js', 'MongoDB'],
+      image: '/clixter-2.svg',
+      gallery: ['/clixter-2.svg'],
+      githubUrl: 'https://github.com/anuxoo001',
+      year: '2025',
+      featured: false,
+      accent: 'from-neon-cyan/30 via-transparent to-violet-500/20',
+      features: [
+        'Voice-based answer input',
+        'Streaming AI interview feedback',
+        'Role-wise mock interview sets',
+        'Score history + analytics',
+        'Dark-mode practice UI',
+      ],
+    },
+    {
+      title: 'MediCare - Hospital Management (EMR)',
+      category: 'Healthcare EMR',
+      description:
+        'Enterprise-style hospital management app covering registration, appointments, billing, pharmacy, and lab workflows.',
+      tags: ['EMR', 'Billing', 'Pharmacy', 'Appointments', 'React'],
+      image: '/toursafe-2.svg',
+      gallery: ['/toursafe-2.svg'],
+      githubUrl: 'https://github.com/anuxoo001',
+      year: '2025',
+      featured: false,
+      accent: 'from-emerald-400/25 via-transparent to-neon-magenta/20',
+      features: [
+        'Patient registration + visits',
+        'Appointment scheduling',
+        'Billing + pharmacy + inventory',
+        'Role-based staff access',
+        'Reports + record management',
+      ],
+    },
+    {
+      title: 'Evalify AI - Mock Interview Platform',
+      category: 'AI Interview Platform',
+      description:
+        'Full-stack AI mock interview platform with realtime voice, streaming Gemini feedback, code scratchpad, and analytics dashboard.',
+      tags: ['Gemini AI', 'Voice', 'Analytics', 'React', 'MongoDB'],
+      image: '/clixter-3.svg',
+      gallery: ['/clixter-3.svg'],
+      githubUrl: 'https://github.com/anuxoo001',
+      year: '2025',
+      featured: false,
+      accent: 'from-neon-magenta/25 via-transparent to-neon-cyan/20',
+      features: [
+        'Realtime voice recognition',
+        'Streaming Gemini AI feedback',
+        'Split-screen code scratchpad',
+        'Performance dashboard + PDF scorecards',
+        'Freemium RBAC + dark mode',
+      ],
+    },
+    {
       title: 'GymPro - Gym Management System',
       category: 'Gym Management System',
       description:
@@ -530,12 +670,11 @@ export default function App() {
                   </a>
                 </div>
 
-                <div className="mt-4 grid grid-cols-4 gap-2 max-w-xl">
+                <div className="mt-4 grid grid-cols-3 gap-2 max-w-xl">
                   {[
                     { n: PROFILE.projects.length, l: 'Projects' },
                     { n: '100+', l: 'DSA solved' },
                     { n: PROFILE.experience.length, l: 'Internships' },
-                    { n: PROFILE.projects.reduce((a, p) => a + (p.gallery?.length || 1), 0), l: 'Photos' },
                   ].map((s) => (
                     <div key={s.l} className="rounded-2xl border border-white/10 bg-black/25 p-2.5 text-center">
                       <div className="text-lg font-bold font-mono text-white">{s.n}</div>
